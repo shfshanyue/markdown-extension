@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "React Chrome Extension Starter",
+  "description": "React Chrome Extension Starter",
+  "version": "1.0",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "assets/content_script.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}
