@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "React Chrome Extension Starter",
-  "description": "React Chrome Extension Starter",
+  "name": "Markdown Reader",
+  "description": "Markdown Reader",
   "version": "1.0",
   "options_ui": {
     "page": "options.html",
