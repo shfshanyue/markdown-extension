@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { turndown } from 'markdown-read/dist/turndown'
+import prettier from 'prettier'
 
 import './index.css'
 
@@ -25,25 +26,46 @@ async function html(): Promise<any | null> {
 
 function Popup() {
   const [content, setContent] = useState<string>('')
+  const [copyText, setCopyText] = useState<string>('复制')
 
   useEffect(() => {
-    html().then(content => {
-      if (content) {
-        setContent(turndown(content.content))
+    html().then(data => {
+      if (data) {
+        const markdown = `> 原文链接: ${data.url}\n> 作者: ${data.byline}\n\n${turndown(data.content)}`
+        setContent(markdown)
       }
     })
   }, [])
 
+  const format = useCallback((content) => {
+    return prettier.format(content, {
+      parser: 'markdown'
+    })
+  }, [])
+
+  const copy = useCallback((content) => {
+    navigator.clipboard.writeText(content).then(() => {
+      setCopyText('复制成功')
+      setTimeout(() => {
+        setCopyText('复制')
+      }, 3000)
+    })
+  }, [content])
+
   return (
     <div
-      className="p-2 w-[420px] grid grid-rows-[50px,500px,30px] rounded-lg"
+      className="py-2 w-[420px] rounded-lg"
     >
-      <h1 className="mt-2 mb-2 text-3xl bold">Markdown Reader</h1>
+      <div className="mt-2 mb-2 font-serif text-3xl font-semibold text-center">Markdown Reader</div>
       <textarea
-        className="px-2 py-1 overflow-auto break-all border border-red-300 rounded content whitespace-wrap"
+        className="px-2 h-[460px] w-full py-1 overflow-auto break-all border-2 border-gray-300 rounded-none outline-none focus:ring-0 ring-0 border-x-0 border-y content whitespace-wrap"
         value={content}
+        // onChange={(e) => setContent(e.target.value)}
       />
-      <div>hello, world</div>
+      <div className="flex justify-center gap-2 px-2 mt-2">
+        <button className="app-button w-[95px] px-0" onClick={() => format(content)}>格式化</button>
+        <button className="app-button w-[95px] px-0" onClick={() => copy(content)}>{copyText}</button>
+      </div>
     </div>
   )
 }
