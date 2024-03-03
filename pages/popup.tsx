@@ -37,13 +37,13 @@ function Popup() {
     })
   }, [])
 
-  const format = useCallback((content) => {
+  const format = useCallback((content: string) => {
     return prettier.format(content, {
       parser: 'markdown'
     })
   }, [])
 
-  const copy = useCallback((content) => {
+  const copy = useCallback((content: string) => {
     navigator.clipboard.writeText(content).then(() => {
       setCopyText('复制成功')
       setTimeout(() => {
