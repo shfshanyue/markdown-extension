@@ -20,7 +20,7 @@
     "css-minimizer-webpack-plugin": "^6.0.0",
     "markdown-read": "^3.3.0",
     "postcss-loader": "^8.1.1",
-    "prettier": "^3.2.5",
+    "prettier": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "style-loader": "^3.3.4",
